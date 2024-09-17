@@ -71,7 +71,7 @@ namespace Vozilastiburek.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Quantity")] Vozila vozila)
+        public async Task<IActionResult> Create([Bind("Id,NazivVozila,Kolicina")] Vozila vozila)
         {
             if (ModelState.IsValid)
             {
@@ -162,7 +162,7 @@ namespace Vozilastiburek.Controllers
         {
             if (_context.Vozila == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Vozila'  is null.");
+                return Problem("Entity set 'AppDbContext.Vozila'  is null.");
             }
             var vozila = await _context.Vozila.FindAsync(id);
             if (vozila != null)

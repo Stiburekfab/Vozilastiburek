@@ -1,5 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Vozilastiburek.Models;
+using System.Threading.Tasks;
+
 
 namespace Vozilastiburek.Data
 {
@@ -10,5 +16,7 @@ namespace Vozilastiburek.Data
         {
         }
         public DbSet<Vozilastiburek.Models.Vozila> Vozila { get; set; } = default!;
+       
+
     }
 }
