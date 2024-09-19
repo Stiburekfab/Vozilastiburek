@@ -3,11 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Vozilastiburek.Models;
 using System.Threading.Tasks;
+using Vozilastiburek.Models;
 
-
-namespace Vozilastiburek.Data
+namespace Vozilastiburek.Data.Migrations
 {
     public class ApplicationDbContext : IdentityDbContext
     {
@@ -15,8 +14,9 @@ namespace Vozilastiburek.Data
             : base(options)
         {
         }
-        public DbSet<Vozilastiburek.Models.Vozila> Vozila { get; set; } = default!;
-       
+        public DbSet<Vozila> Vozila { get; set; } = default!;
+        public DbSet<Tablice> Tablice { get; set; }
+
 
     }
 }

@@ -5,109 +5,92 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Vozilastiburek.Models;
-using Microsoft.AspNetCore.Authorization;
 using Vozilastiburek.Data.Migrations;
+using Vozilastiburek.Models;
 
 namespace Vozilastiburek.Controllers
 {
-    public class VozilaController : Controller
+    public class TabliceController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public VozilaController(ApplicationDbContext context)
+        public TabliceController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Vozila
+        // GET: Tablice
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Vozila.ToListAsync());
+              return _context.Tablice != null ? 
+                          View(await _context.Tablice.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.Tablice'  is null.");
         }
 
-        // GET: Jokes/ShowSearchForms
-        public async Task<IActionResult> ShowSearchForm()
-        {
-            return View();
-        }
-
-        // GET: Jokes/ShowSearchResults
-        public async Task<IActionResult> ShowSearchResults(String SearchPhrase)
-        {
-            return View("Index", await _context.Vozila.Where(j => j.NazivVozila.Contains(SearchPhrase)).ToListAsync());
-        }
-
-        // GET: Vozila/Details/5
+        // GET: Tablice/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Vozila == null)
+            if (id == null || _context.Tablice == null)
             {
                 return NotFound();
             }
 
-            var vozila = await _context.Vozila
+            var tablice = await _context.Tablice
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (vozila == null)
+            if (tablice == null)
             {
                 return NotFound();
             }
 
-            return View(vozila);
+            return View(tablice);
         }
 
-        // GET: Vozila/Create
-
-        [Authorize]
+        // GET: Tablice/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Vozila/Create
+        // POST: Tablice/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-
-        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,NazivVozila,Kolicina")] Vozila vozila)
+        public async Task<IActionResult> Create([Bind("Id,NazivTablica,Oznaka")] Tablice tablice)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(vozila);
+                _context.Add(tablice);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(vozila);
+            return View(tablice);
         }
 
-        [Authorize]
-        // GET: Vozila/Edit/5
+        // GET: Tablice/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Vozila == null)
+            if (id == null || _context.Tablice == null)
             {
                 return NotFound();
             }
 
-            var vozila = await _context.Vozila.FindAsync(id);
-            if (vozila == null)
+            var tablice = await _context.Tablice.FindAsync(id);
+            if (tablice == null)
             {
                 return NotFound();
             }
-            return View(vozila);
+            return View(tablice);
         }
 
-        [Authorize]
-        // POST: Vozila/Edit/5
+        // POST: Tablice/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Quantity")] Vozila vozila)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,NazivTablica,Oznaka")] Tablice tablice)
         {
-            if (id != vozila.Id)
+            if (id != tablice.Id)
             {
                 return NotFound();
             }
@@ -116,12 +99,12 @@ namespace Vozilastiburek.Controllers
             {
                 try
                 {
-                    _context.Update(vozila);
+                    _context.Update(tablice);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!VozilaExists(vozila.Id))
+                    if (!TabliceExists(tablice.Id))
                     {
                         return NotFound();
                     }
@@ -132,51 +115,49 @@ namespace Vozilastiburek.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(vozila);
+            return View(tablice);
         }
 
-        [Authorize]
-        // GET: Vozila/Delete/5
+        // GET: Tablice/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Vozila == null)
+            if (id == null || _context.Tablice == null)
             {
                 return NotFound();
             }
 
-            var vozila = await _context.Vozila
+            var tablice = await _context.Tablice
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (vozila == null)
+            if (tablice == null)
             {
                 return NotFound();
             }
 
-            return View(vozila);
+            return View(tablice);
         }
 
-        [Authorize]
-        // POST: Vozila/Delete/5
+        // POST: Tablice/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Vozila == null)
+            if (_context.Tablice == null)
             {
-                return Problem("Entity set 'AppDbContext.Vozila'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Tablice'  is null.");
             }
-            var vozila = await _context.Vozila.FindAsync(id);
-            if (vozila != null)
+            var tablice = await _context.Tablice.FindAsync(id);
+            if (tablice != null)
             {
-                _context.Vozila.Remove(vozila);
+                _context.Tablice.Remove(tablice);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool VozilaExists(int id)
+        private bool TabliceExists(int id)
         {
-            return _context.Vozila.Any(e => e.Id == id);
+          return (_context.Tablice?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

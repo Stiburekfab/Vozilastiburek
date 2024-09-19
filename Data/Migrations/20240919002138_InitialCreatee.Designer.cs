@@ -5,15 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Vozilastiburek.Data;
 
 #nullable disable
 
 namespace Vozilastiburek.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240917214130_InitialModel")]
-    partial class InitialModel
+    [Migration("20240919002138_InitialCreatee")]
+    partial class InitialCreatee
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -226,7 +225,7 @@ namespace Vozilastiburek.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Vozilastiburek.Models.Speaker", b =>
+            modelBuilder.Entity("Vozilastiburek.Models.Tablice", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -234,38 +233,15 @@ namespace Vozilastiburek.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Experience")
-                        .HasMaxLength(100)
-                        .HasColumnType("int");
-
-                    b.Property<string>("ProfilePicture")
-                        .IsRequired()
+                    b.Property<string>("NazivTablica")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Qualification")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("SpeakerName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<DateTime>("SpeakingDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("SpeakingTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Venue")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                    b.Property<int?>("Oznaka")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Speakers");
+                    b.ToTable("Tablice");
                 });
 
             modelBuilder.Entity("Vozilastiburek.Models.Vozila", b =>

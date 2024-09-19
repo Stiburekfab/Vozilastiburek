@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Vozilastiburek.Data;
+using Vozilastiburek.Data.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 

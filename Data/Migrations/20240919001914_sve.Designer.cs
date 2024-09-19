@@ -5,21 +5,20 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Vozilastiburek.Data;
 
 #nullable disable
 
 namespace Vozilastiburek.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240915172433_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240919001914_sve")]
+    partial class sve
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.15")
+                .HasAnnotation("ProductVersion", "6.0.33")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -226,6 +225,25 @@ namespace Vozilastiburek.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Vozilastiburek.Models.Tablice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("NazivTablica")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Oznaka")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tablice");
+                });
+
             modelBuilder.Entity("Vozilastiburek.Models.Vozila", b =>
                 {
                     b.Property<int>("Id")
@@ -234,11 +252,10 @@ namespace Vozilastiburek.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Kolicina")
+                    b.Property<int?>("Kolicina")
                         .HasColumnType("int");
 
                     b.Property<string>("NazivVozila")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
